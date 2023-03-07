@@ -28,15 +28,20 @@ router.get('/:bookId', function(req, res) {
     res.json(findBook);
   });
 
-router.post('/borrowed', function(req, res) {
-  console.log("body", req.body)
-  let bookId = req.body.bookId;
-  console.log(bookId);
-  let borrowedBook = books.find(books => books.borrowed == bookedBorrowed) 
-  console.log("book", borrowedBook)
+  router.post('/borrowed', function(req, res) {
+    console.log("body", req.body)
 
-  borrowedBook.borrowed = true;
-  res.send(`Boken är lånad`)
-})  
+    let bookId = req.body.bookId;
+    console.log(bookId);
+
+    let borrowedBook = books.find(books => books.id == bookId) 
+  
+    borrowedBook.borrowed = !borrowedBook.borrowed;
+    console.log("book borrowed", borrowedBook)
+
+    console.log("all books", books);
+
+    res.json(books)
+  })   
 
 module.exports = router;
